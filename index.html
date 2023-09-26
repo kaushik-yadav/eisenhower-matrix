@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <style>
-    .body,html{
+    .body,
+    html {
         padding: 0px;
-        margin:0px;
+        margin: 0px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
-    .top{
+
+    .top {
         display: flex;
-        padding:20px;
+        padding: 20px;
         background-color: beige;
-        justify-content:space-between;
+        justify-content: space-between;
         align-items: center;
     }
-    .top h1{
-        margin:0px 20% 0px 20%;
+
+    .top h1 {
+        margin: 0px 20% 0px 20%;
     }
-    .left{
-        display:flex;
+
+    .left {
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
         background-color: rgb(205, 205, 94);
         width: 10%;
-        height:600px;
+        height: 600px;
     }
-    .left h1{
-        margin:120px 0 120px 0px;
+
+    .left h1 {
+        margin: 120px 0 120px 0px;
         transform: rotate(270deg);
     }
-    .main{
-        display:flex;
+
+    .main {
+        display: flex;
     }
-    .box{
+
+    .box {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr;
@@ -44,19 +52,75 @@
         row-gap: 20px;
         width: 100%;
     }
-    .item{
+
+    .item {
         display: flex;
         flex-direction: column;
         background-color: rgb(216, 216, 244);
         width: 100%;
         height: 100%;
     }
-    .card{
+
+    .card {
         background-color: aliceblue;
-        margin:5px;
+        margin: 5px;
+    }
+
+    .new-task {
+        border-radius: 50%;
+        color: red;
+        background-color: black;
+        padding: 20px;
+        text-decoration: none;
+        margin: 0;
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        right: 5%;
+        bottom: 10%;
     }
 </style>
-<body>  
+
+<body>
+    <script>
+
+        let cards = 0;
+
+        function startDrag(event) {
+            event.dataTransfer.setData('myNode', event.target.id)
+        }
+        function allowDrag(event) {
+            event.preventDefault()
+        }
+
+        function drop(event) {
+            myId = event.dataTransfer.getData('myNode')
+            const nodeData = document.getElementById(myId)
+            event.target.appendChild(nodeData)
+        }
+
+        function addNode() {
+            let taskName = prompt('Enter Task Name:');
+            let ogNode = document.getElementById('genericCard')
+            let myTaskCard = ogNode.cloneNode(true)
+            myTaskCard.removeAttribute('id')
+            myTaskCard.setAttribute('id', 'task' + cards)
+            cards += 1
+            myTaskCard.style.display = 'block'
+            myTaskCard.childNodes[1].innerText = taskName
+
+            let lastDiv = document.getElementById('unimportantUnurgent')
+            lastDiv.appendChild(myTaskCard)
+            console.log(myTaskCard.childNodes)
+
+        }
+    </script>
+
+    <div class="card" draggable="true" ondragstart="startDrag(event)" id="genericCard" style="display: none;">
+        <p>Card 1</p>
+    </div>
+
+
     <div class="top">
         <h1>Important</h1>
         <h1>unimportant</h1>
@@ -67,28 +131,20 @@
             <h1>Not urgent</h1>
         </div>
         <div class="box">
-            <div class="item">
-                <div class="card">
-                    <p>Card 1</p>
-                </div>
-                <div class="card">
-                    <p>Card 2</p>
-                </div>
-                <div class="card">
-                    <p>Card 3</p>
-                </div>
+            <div class="item" ondrop="drop(event)" ondragover="allowDrag(event)">
             </div>
-            <div class="item">
-                <h1>element 2</h1>
+            <div class="item" ondrop="drop(event)" ondragover="allowDrag(event)">
             </div>
-            <div class="item">
-                <h1>element 3</h1>
+            <div class="item" ondrop="drop(event)" ondragover="allowDrag(event)">
             </div>
-            <div class="item">
-                <h1>element 4</h1>
+            <div class="item" ondrop="drop(event)" ondragover="allowDrag(event)" id="unimportantUnurgent">
             </div>
         </div>
     </div>
 
+    <div>
+        <a href="#" class="new-task" onclick="addNode()">+</a>
+    </div>
 </body>
+
 </html>
