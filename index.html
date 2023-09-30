@@ -10,40 +10,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
 
 </head>
+<script>
+
+    let cards = 0;
+
+    function startDrag(event) {
+        event.dataTransfer.setData('myNode', event.target.id)
+    }
+    function allowDrag(event) {
+        event.preventDefault()
+    }
+
+    function drop(event) {
+        myId = event.dataTransfer.getData('myNode')
+        const nodeData = document.getElementById(myId)
+        event.target.appendChild(nodeData)
+    }
+
+    function addNode() {
+        let taskName = prompt('Enter Task Name:');
+        let ogNode = document.getElementById('genericCard')
+        let myTaskCard = ogNode.cloneNode(true)
+        myTaskCard.removeAttribute('id')
+        myTaskCard.setAttribute('id', 'task' + cards)
+        cards += 1
+        myTaskCard.style.display = 'block'
+        myTaskCard.childNodes[1].innerText = taskName
+
+        let lastDiv = document.getElementById('unimportantUnurgent')
+        lastDiv.appendChild(myTaskCard)
+        console.log(myTaskCard.childNodes)
+
+    }
+</script>
 <style>
     .body,
     html {
         padding: 0px;
         margin: 0px;
+        margin-right:10px;
         font-family: 'Poppins', sans-serif;
     }
 
     .top {
         display: flex;
-        padding: 20px;
-        background-color: beige;
+        padding: 10px;
         justify-content: space-between;
         align-items: center;
     }
 
     .top h1 {
-        margin: 0px 20% 0px 20%;
+        margin: 0px 15% 0px 25%;
     }
 
     .left {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        background-color: rgb(205, 205, 94);
-        width: 10%;
-        height: 600px;
+        width:5%;
+        height: 40em;
     }
 
     .left h1 {
-        margin: 120px 0 120px 0px;
+        margin-top: 5em;
+        margin-bottom: 2.5em;
         transform: rotate(270deg);
     }
-
     .main {
         display: flex;
     }
@@ -55,6 +87,7 @@
         column-gap: 20px;
         row-gap: 20px;
         width: 100%;
+        max-height: 100%;
     }
 
     .item {
@@ -63,76 +96,61 @@
         background-color: rgb(216, 216, 244);
         width: 100%;
         height: 100%;
+        border-radius: 22px;
     }
 
     .card {
         background-color: aliceblue;
-        margin: 5px;
+        margin:10px;
+        border-radius: 14px;
+        transition: 300ms;
     }
-
+    .card:hover{
+        box-shadow: 1px 1px 5px 3px rgb(203, 202, 202);
+        transition: 300ms;
+    }
+    .card p{
+        margin-left:14px;
+        letter-spacing: 1px;
+        font-weight:400;
+    }
     .new-task {
+        display: flex;
         border-radius: 50%;
-        color: red;
-        background-color: black;
+        color: rgb(230, 220, 220);
+        background-color: rgb(239, 110, 110);
         padding: 20px;
         text-decoration: none;
         margin: 0;
-        height: 20px;
-        width: 20px;
+        height: 2%;
+        width: 1%;
         position: absolute;
-        right: 5%;
-        bottom: 10%;
+        right: 2%;
+        bottom: 5%;
+        font-size: 2em;
+        justify-content: center;
+        align-items: center;
+        transition: 200ms;
+    }
+    .new-task:hover{
+        background-color: rgb(246, 94, 94);
+        transition: 200ms;
+        box-shadow: 1px 1px 1px rgb(185, 183, 183);
     }
 </style>
 
 <body>
-    <script>
-
-        let cards = 0;
-
-        function startDrag(event) {
-            event.dataTransfer.setData('myNode', event.target.id)
-        }
-        function allowDrag(event) {
-            event.preventDefault()
-        }
-
-        function drop(event) {
-            myId = event.dataTransfer.getData('myNode')
-            const nodeData = document.getElementById(myId)
-            event.target.appendChild(nodeData)
-        }
-
-        function addNode() {
-            let taskName = prompt('Enter Task Name:');
-            let ogNode = document.getElementById('genericCard')
-            let myTaskCard = ogNode.cloneNode(true)
-            myTaskCard.removeAttribute('id')
-            myTaskCard.setAttribute('id', 'task' + cards)
-            cards += 1
-            myTaskCard.style.display = 'block'
-            myTaskCard.childNodes[1].innerText = taskName
-
-            let lastDiv = document.getElementById('unimportantUnurgent')
-            lastDiv.appendChild(myTaskCard)
-            console.log(myTaskCard.childNodes)
-
-        }
-    </script>
-
     <div class="card" draggable="true" ondragstart="startDrag(event)" id="genericCard" style="display: none;">
         <p>Card 1</p>
     </div>
-
-
     <div class="top">
-        <h1>Important</h1>
-        <h1>unimportant</h1>
+        <h1>Urgent</h1>
+        <h1>Not urgent</h1>
     </div>
     <div class="main">
         <div class="left">
-            <h1>Urgent</h1>
-            <h1>Not urgent</h1>
+            <h1>Important</h1>
+            <h1>Unimportant</h1>
         </div>
         <div class="box">
             <div class="item" ondrop="drop(event)" ondragover="allowDrag(event)">
@@ -147,7 +165,7 @@
     </div>
 
     <div>
-        <a href="#" class="new-task" onclick="addNode()">+</a>
+        <a href="#" class="new-task" onclick="addNode()"><div>+</div></a>
     </div>
 </body>
 
