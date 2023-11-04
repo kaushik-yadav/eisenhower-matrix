@@ -57,10 +57,13 @@
         padding: 0.5%;
         justify-content: space-between;
         align-items: center;
+        overflow-wrap: normal;
     }
 
     .top h1 {
         margin: 0px 15% 0px 25%;
+        overflow-wrap: normal;
+        white-space: nowrap;
     }
     .bottom{
         width: 100%;
@@ -75,9 +78,42 @@
 
     .left h1 {
         margin-top: 5em;
-        margin-bottom: 2.5em;
+        margin-bottom:5em;
         transform: rotate(270deg);
     }
+    @media screen and (max-width: 600px) {
+        .left h1 {
+            font-size: 18px;
+            margin-bottom: 6em;
+            margin-top:8em;
+            margin-left: 0.4em;
+            margin-right: 1em;
+        }
+        .top h1{
+            font-size: 18px;
+            margin-left: 3.5em;
+            margin-right: 2em;
+            overflow-wrap: normal;
+            white-space: nowrap;
+        }
+    }
+    @media screen and (min-width: 600px) and (max-width: 1000px){
+        .left h1 {
+            font-size: 18px;
+            margin-bottom: 6em;
+            margin-top:8em;
+            margin-left: 0.4em;
+            margin-right: 1em;
+        }
+        .top h1{
+            font-size: 18px;
+            margin-left: 10em;
+            margin-right: 8em;
+            overflow-wrap: normal;
+            white-space: nowrap;
+        }
+    }
+
     .main {
         display: flex;
         width: 100%;
@@ -98,23 +134,30 @@
         flex-direction: column;
         background-color: rgb(216, 216, 244);
         width:100% !important;
-        height: 19em;
+        max-height: 19em;
         overflow-y:auto;
+        position: relative;
+        width: 100%;
+        height: 100%;
         border-radius: 22px;
+        word-wrap: break-word;
     }
 
     .card {
         background-color: aliceblue;
-        margin:1.5%;
+        margin:0.5rem;
         border-radius: 14px;
         transition: 300ms;
+        
+        
     }
     .card:hover{
         box-shadow: 1px 1px 5px 3px rgb(203, 202, 202);
         transition: 300ms;
+
     }
     .card p{
-        margin-left:2%;
+        margin-left:0.8em;
         letter-spacing: 1px;
         font-weight:400;
     }
@@ -128,9 +171,9 @@
         margin: 0;
         height: 2%;
         width: 1%;
-        margin-left:40%;
-        margin-top: 15%;
         position: absolute;
+        bottom: 5%;
+        right:3%;
         font-size: 2em;
         justify-content: center;
         align-items: center;
